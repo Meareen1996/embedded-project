@@ -1,0 +1,6 @@
+.DS_Store
+build/
+*.log
+
+# Temporary PDF renders and inspection files
+tmp/

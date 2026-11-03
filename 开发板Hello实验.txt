@@ -1,0 +1,53 @@
+I.MX6ULL Pro：交叉编译、ADB 传输与运行
+
+环境分工
+Mac：编辑代码，运行 ADB，通过 USB OTG 连接开发板。
+Ubuntu ARM64：使用 arm-linux-gnueabihf-gcc，生成开发板使用的 32 位 ARM 程序。
+I.MX6ULL Pro：运行 ARMv7 Buildroot Linux，执行生成的程序。
+USB 串口可用于观察日志；本实验通过 ADB 执行程序，不需要网线。
+
+准备（已由本次搭建完成）
+Ubuntu 中安装：
+sudo apt update
+sudo apt install gcc-arm-linux-gnueabihf libc6-dev-armhf-cross
+Mac 中安装：
+brew install --cask android-platform-tools
+
+重复实验：以下命令全部在 Mac 终端输入
+
+cd /Users/yang/Documents/ChatGPT/linux
+limactl start embedded-dev
+adb devices
+limactl shell embedded-dev bash /Users/yang/Documents/ChatGPT/linux/scripts/build-imx6ull-hello.sh
+adb -s 100ask_IMX6ULL shell 'mkdir -p /root/linux-hello'
+adb -s 100ask_IMX6ULL push build/imx6ull/hello /root/linux-hello/hello
+adb -s 100ask_IMX6ULL shell 'chmod +x /root/linux-hello/hello && /root/linux-hello/hello yang'
+
+预期输出：
+Hello, yang!
+This program was cross-compiled in Ubuntu and runs on the I.MX6ULL board.
+
+源码：examples/imx6ull-hello/main.c
+构建脚本：scripts/build-imx6ull-hello.sh
+输出程序：build/imx6ull/hello
+开发板上的程序：/root/linux-hello/hello
+修改源码并保存后，重新执行构建、push 和运行命令即可。
+默认的 ./linux demo 和 VS Code 默认构建任务仍运行 Ubuntu 示例。
+
+编译参数
+-Wall -Wextra：启用常见编译警告。
+-g -O0：保留调试信息，不开启优化，方便入门调试。
+-mcpu=cortex-a7：生成适合这块板子 CPU 的指令。
+-mfpu=neon-vfpv4 -mfloat-abi=hard：选择相应浮点指令与调用约定。
+-static：将本例用到的库静态链接进程序，避免新 Ubuntu 的动态 C 库与板载旧 C 库版本不匹配。
+
+与课程的区别
+课程使用 arm-buildroot-linux-gnueabihf-gcc。这次使用 Ubuntu 提供的 arm-linux-gnueabihf-gcc，在 ARM64 Ubuntu 上运行，目标为 ARM32 Linux。
+当前示例只验证用户态 Hello 程序的交叉编译和传输运行。后续课程的内核、驱动、Qt 等仍需分别核对厂商 SDK、内核版本和目标库；不能把这个工具链配置直接视为整套 SDK 配置完成。
+
+ADB 命令
+adb devices：查看设备。
+adb push 本地文件 板子路径：传输文件。
+adb shell 命令：让开发板执行命令。
+chmod +x：添加程序的执行权限。
+本实验添加测试程序，不重烧系统、不修改 eMMC 分区。

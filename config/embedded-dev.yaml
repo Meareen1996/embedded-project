@@ -1,0 +1,33 @@
+minimumLimaVersion: 2.0.0
+images:
+  - location: https://cloud-images.ubuntu.com/releases/noble/release-20260926/ubuntu-24.04-server-cloudimg-arm64.img
+    arch: aarch64
+    digest: sha256:1d6bffe64b848468ac97f821d369a4846d983de1800ccf6b5ec8853e85cefc55
+vmType: vz
+arch: aarch64
+cpus: 4
+memory: 4GiB
+disk: 40GiB
+mountType: virtiofs
+mounts:
+  - location: /Users/yang/Documents/ChatGPT/linux
+    writable: true
+containerd:
+  system: false
+  user: false
+provision:
+  - mode: system
+    script: |
+      #!/bin/bash
+      set -euxo pipefail
+      printf "apt_preserve_sources_list: true\n" > /etc/cloud/cloud.cfg.d/99-embedded-preserve-apt.cfg
+      if [ -f /var/lib/embedded-dev/tools-v1.ready ]; then exit 0; fi
+      export DEBIAN_FRONTEND=noninteractive
+      # ARM64 软件包使用国内镜像，保留 Ubuntu 的签名校验。
+      if [ -f /etc/apt/sources.list.d/ubuntu.sources ]; then
+        sed -i.bak -E 's|https?://ports.ubuntu.com/ubuntu-ports/?|https://mirrors.ustc.edu.cn/ubuntu-ports/|g' /etc/apt/sources.list.d/ubuntu.sources
+      fi
+      apt-get -o Acquire::Retries=3 update
+      apt-get -o Acquire::Retries=3 install -y build-essential cmake ninja-build gdb gdb-multiarch git python3 python3-pip python3-venv pkg-config file rsync curl wget unzip zip ca-certificates device-tree-compiler minicom
+      install -d /var/lib/embedded-dev
+      touch /var/lib/embedded-dev/tools-v1.ready

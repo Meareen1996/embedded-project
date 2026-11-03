@@ -1,0 +1,14 @@
+#!/bin/bash
+set -euo pipefail
+export PATH="/opt/homebrew/bin:/usr/local/bin:$PATH"
+ROOT="$(cd "$(dirname "$0")" && pwd)"
+VM=embedded-dev
+case "${1:-shell}" in
+  start) limactl start "$VM" ;;
+  stop) limactl stop "$VM" ;;
+  status) limactl list "$VM" ;;
+  shell) limactl shell --workdir "$ROOT" "$VM" ;;
+  check) limactl shell --workdir "$ROOT" "$VM" bash "$ROOT/scripts/check-env.sh" ;;
+  demo) limactl shell --workdir "$ROOT" "$VM" bash "$ROOT/scripts/run-demo.sh" ;;
+  *) echo "用法: ./linux [start|stop|status|shell|check|demo]" >&2; exit 2 ;;
+esac

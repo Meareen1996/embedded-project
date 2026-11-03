@@ -1,0 +1,111 @@
+Linux 嵌入式开发入门环境
+
+一、这套环境是什么
+
+Mac（宿主机）→ Lima（管理虚拟机）→ Ubuntu 24.04 ARM64（Linux 虚拟机）→ GCC / GDB / CMake（开发工具）。
+
+你的电脑是 Apple M3 Pro，18 GB 内存。这台虚拟机配置为 4 核、4 GB 内存、40 GB 虚拟磁盘；虚拟磁盘按使用情况占用宿主机空间，运行时会占用内存，停止后释放运行资源。
+Ubuntu 使用命令行界面，没有安装图形桌面。学习 Linux、C 语言、编译和调试不需要图形桌面。
+
+二、每天怎么用
+
+最方便的方法：在访达打开此文件夹，双击“进入Linux.command”。学习结束后输入 exit，再双击“停止Linux.command”。
+
+打开 Mac 的“终端”，输入：
+
+cd /Users/yang/Documents/ChatGPT/linux
+./linux start
+./linux shell
+
+成功进入后，输入以下命令确认自己在 Linux 中：
+
+uname -s
+cat /etc/os-release
+pwd
+
+uname -s 显示 Linux；Mac 终端直接执行时显示 Darwin。
+输入 exit 返回 Mac。exit 只是退出终端会话，不会关闭虚拟机。
+回到 Mac 后执行 ./linux stop 关闭虚拟机。
+执行 ./linux status 查看运行状态。
+如果提示 command not found，请确认执行过上面的 cd，并且使用 ./linux 而不是 linux。
+
+三、运行第一个 C 程序
+
+在 Mac 的项目目录执行：
+
+./linux demo
+
+它会读取 examples/hello/main.c，使用 CMake 和 GCC 构建，再运行程序。
+你应该看到：
+你好，Linux！我的第一个 C 程序运行成功。
+2 + 3 = 5
+
+用已安装的 VS Code 打开 /Users/yang/Documents/ChatGPT/linux 文件夹，修改 examples/hello/main.c 的字符串，保存后重新执行 ./linux demo，就能看到变化。
+也可以在 VS Code 打开该文件夹后，按 Command + Shift + B，直接编译并运行示例（先启动 Linux）。
+示例程序是 Linux 程序；在 Linux 中运行它。Mac 的可执行程序和 Linux 的可执行程序格式不同。
+源码在 Mac 的共享目录，构建产物在虚拟机自己的 ~/build/embedded-hello 中。
+在 Mac 执行 ./linux check 可重新检查整套工具和示例。
+
+四、试试调试
+
+先运行一次 ./linux demo，再运行 ./linux shell 进入 Linux，执行：
+
+gdb ~/build/embedded-hello/hello
+
+在 GDB 提示符中依次输入：
+
+break main
+run
+next
+next
+continue
+quit
+
+break 设置断点；run 启动；next 执行下一行；continue 继续运行；quit 退出调试器。
+
+五、工具分别做什么
+
+GCC / G++：把 C / C++ 源代码编译成可执行程序。
+Make / CMake / Ninja：组织多个源文件的编译过程。
+GDB / GDB multiarch：暂停程序、逐行执行、查看变量；连接开发板还需要对应调试器和配置。
+Git：保存代码修改历史。
+Python / venv：运行开发辅助脚本，建立独立 Python 环境。
+dtc：设备树编译器，后续学习嵌入式 Linux 会用到。
+minicom：串口终端工具，连接真实硬件还需要配置设备接入。
+
+六、建议学习顺序
+
+1. Linux 基础：pwd、ls、cd、mkdir、cp、mv、cat、less；理解目录和路径。
+2. C 基础：变量、条件、循环、函数、数组、指针、结构体。
+3. 编译调试：修改本项目示例，观察编译错误，用 GDB 逐行执行。
+4. Linux 编程：文件读写、进程、线程、串口、TCP / UDP。
+5. 决定开发板，再安装厂家 SDK、交叉编译器、烧录和调试工具。
+
+七、以后接开发板要注意什么
+
+ARM64 是当前 Linux 环境的 CPU 架构，不代表可以直接把编译出来的程序烧进任意 ARM 开发板。
+STM32 等裸机 / RTOS 开发常需 arm-none-eabi 工具链；ESP32 使用对应 ESP-IDF 工具链；Linux 开发板通常需匹配 CPU、C 库及 SDK 的交叉工具链。
+部分厂家只支持 x86_64 Ubuntu。先核对具体 SDK 要求，必要时使用 x86_64 仿真环境或远程 x86_64 Linux 主机。
+当前虚拟机没有配置 USB 直通。连接 USB 串口、J-Link / ST-Link 等设备时，需要根据开发板选择 Mac 上烧录 / 调试或其他硬件接入方案。
+当前环境已经适合 Linux 和 C 基础学习；实际开发板的构建、烧录和硬件调试在确定型号后单独配置。
+
+八、文件与维护
+
+linux：日常启动、进入、检查和停止的快捷脚本。
+config/embedded-dev.yaml：可复用的虚拟机配置。
+examples/hello：第一个 C 工程。
+scripts：环境检查和示例构建脚本。
+虚拟机数据保存在 ~/.lima/embedded-dev。不要手动删除该目录。
+项目源码在 Mac 当前文件夹内，可以正常备份或使用 Git 保存。
+
+进入 Linux 后可以执行以下命令更新软件：
+
+sudo apt update
+sudo apt upgrade
+
+网络安装失败时，先确认网络正常，再重新执行 ./linux start；如果虚拟机已在运行，可先 ./linux stop 再 ./linux start 重试初始化。
+
+官方资料：
+Lima 安装：https://lima-vm.io/docs/installation/
+Lima 虚拟机配置：https://lima-vm.io/docs/config/
+Ubuntu 命令行入门：https://ubuntu.com/tutorials/command-line-for-beginners

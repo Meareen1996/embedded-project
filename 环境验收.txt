@@ -1,0 +1,52 @@
+
+=== Linux 系统 ===
+PRETTY_NAME="Ubuntu 24.04.5 LTS"
+NAME="Ubuntu"
+VERSION_ID="24.04"
+VERSION="24.04.5 LTS (Noble Numbat)"
+VERSION_CODENAME=noble
+ID=ubuntu
+ID_LIKE=debian
+HOME_URL="https://www.ubuntu.com/"
+SUPPORT_URL="https://help.ubuntu.com/"
+BUG_REPORT_URL="https://bugs.launchpad.net/ubuntu/"
+PRIVACY_POLICY_URL="https://www.ubuntu.com/legal/terms-and-policies/privacy-policy"
+UBUNTU_CODENAME=noble
+LOGO=ubuntu-logo
+aarch64
+
+=== 开发工具 ===
+/usr/bin/gcc
+/usr/bin/g++
+/usr/bin/make
+/usr/bin/cmake
+/usr/bin/ninja
+/usr/bin/gdb
+/usr/bin/gdb-multiarch
+/usr/bin/git
+/usr/bin/python3
+/usr/bin/dtc
+/usr/bin/minicom
+gcc (Ubuntu 13.3.0-6ubuntu2~24.04.1) 13.3.0
+
+=== C 语言构建与运行 ===
+-- Configuring done (0.0s)
+-- Generating done (0.0s)
+-- Build files have been written to: /home/yang.guest/build/embedded-hello
+ninja: no work to do.
+你好，Linux！我的第一个 C 程序运行成功。
+2 + 3 = 5
+/home/yang.guest/build/embedded-hello/hello: ELF 64-bit LSB pie executable, ARM aarch64, version 1 (SYSV), dynamically linked, interpreter /lib/ld-linux-aarch64.so.1, BuildID[sha1]=c821093f4adab9d33fb4233b0f1396d6ddec0ee0, for GNU/Linux 3.7.0, with debug_info, not stripped
+Breakpoint 1 at 0x7e4: file /Users/yang/Documents/ChatGPT/linux/examples/hello/main.c, line 5.
+[Thread debugging using libthread_db enabled]
+Using host libthread_db library "/lib/aarch64-linux-gnu/libthread_db.so.1".
+
+Breakpoint 1, add (a=2, b=3) at /Users/yang/Documents/ChatGPT/linux/examples/hello/main.c:5
+5	    return a + b;
+$1 = 2
+$2 = 3
+你好，Linux！我的第一个 C 程序运行成功。
+2 + 3 = 5
+[Inferior 1 (process 1367) exited normally]
+NAME            STATUS     SSH                VMTYPE    ARCH       CPUS    MEMORY    DISK     DIR
+embedded-dev    Running    127.0.0.1:51073    vz        aarch64    4       4GiB      40GiB    ~/.lima/embedded-dev
