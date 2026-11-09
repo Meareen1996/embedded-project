@@ -1,0 +1,25 @@
+{
+  "version": 4,
+  "configurations": [
+    {
+      "name": "I.MX6ULL Linux ARM32",
+      "compilerPath": "/usr/bin/clang",
+      "compilerArgs": [
+        "--target=arm-linux-gnueabihf",
+        "--sysroot=${workspaceFolder}/build/vscode-sysroot",
+        "-mcpu=cortex-a7",
+        "-mfpu=neon-vfpv4",
+        "-mfloat-abi=hard"
+      ],
+      "intelliSenseMode": "linux-clang-arm",
+      "cStandard": "c11",
+      "cppStandard": "c++17",
+      "includePath": ["${workspaceFolder}/apps", "${workspaceFolder}/examples"],
+      "defines": [],
+      "browse": {
+        "path": ["${workspaceFolder}/apps", "${workspaceFolder}/examples"],
+        "limitSymbolsToIncludedHeaders": true
+      }
+    }
+  ]
+}

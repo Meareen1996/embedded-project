@@ -1,3 +1,64 @@
 {
-    "cmake.sourceDirectory": "/Users/yang/Documents/ChatGPT/linux/examples/hello"
+  "cmake.sourceDirectory": "${workspaceFolder}/examples/hello",
+  "cmake.configureOnOpen": false,
+  "cmake.environment": {
+    "PATH": "${env:PATH}"
+  },
+  "C_Cpp.intelliSenseEngine": "default",
+  "C_Cpp.formatting": "clangFormat",
+  "C_Cpp.clang_format_style": "file",
+  "C_Cpp.clang_format_fallbackStyle": "LLVM",
+  "C_Cpp.errorSquiggles": "enabled",
+  "C_Cpp.default.configurationProvider": "",
+  "[c]": {
+    "editor.defaultFormatter": "ms-vscode.cpptools",
+    "editor.formatOnSave": true,
+    "editor.formatOnSaveMode": "file",
+    "editor.tabSize": 4,
+    "editor.insertSpaces": true,
+    "editor.detectIndentation": false
+  },
+  "[cpp]": {
+    "editor.defaultFormatter": "ms-vscode.cpptools",
+    "editor.formatOnSave": true,
+    "editor.formatOnSaveMode": "file",
+    "editor.tabSize": 4,
+    "editor.insertSpaces": true,
+    "editor.detectIndentation": false
+  },
+  "files.encoding": "utf8",
+  "files.eol": "\n",
+  "files.insertFinalNewline": true,
+  "files.associations": {
+    "*.c": "c",
+    "*.h": "c"
+  },
+  "terminal.integrated.defaultProfile.osx": "Mac · zsh",
+  "terminal.integrated.profiles.osx": {
+    "Mac · zsh": {
+      "path": "/bin/zsh",
+      "args": [
+        "-l"
+      ]
+    },
+    "Ubuntu · embedded-dev": {
+      "path": "/opt/homebrew/bin/limactl",
+      "args": [
+        "shell",
+        "--workdir",
+        "${workspaceFolder}",
+        "embedded-dev"
+      ]
+    },
+    "开发板 · ADB": {
+      "path": "/opt/homebrew/bin/adb",
+      "args": [
+        "shell"
+      ]
+    }
+  },
+  "files.watcherExclude": {
+    "**/build/**": true,
+    "**/tmp/**": true
+  }
 }

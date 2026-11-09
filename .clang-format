@@ -1,0 +1,10 @@
+# C/C++ 保存时格式化；由 Microsoft C/C++ 扩展的 clang-format 使用。
+BasedOnStyle: LLVM
+IndentWidth: 4
+TabWidth: 4
+UseTab: Never
+BreakBeforeBraces: Linux
+ColumnLimit: 100
+SortIncludes: false
+AllowShortIfStatementsOnASingleLine: false
+AllowShortLoopsOnASingleLine: false

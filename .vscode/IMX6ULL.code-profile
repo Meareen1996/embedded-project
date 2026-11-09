@@ -1,0 +1,5 @@
+{
+  "name": "I.MX6ULL Linux",
+  "settings": "{\n  \"C_Cpp.intelliSenseEngine\": \"default\",\n  \"C_Cpp.formatting\": \"clangFormat\",\n  \"C_Cpp.clang_format_style\": \"file\",\n  \"[c]\": {\n    \"editor.defaultFormatter\": \"ms-vscode.cpptools\",\n    \"editor.formatOnSave\": true,\n    \"editor.formatOnSaveMode\": \"file\",\n    \"editor.tabSize\": 4,\n    \"editor.insertSpaces\": true\n  },\n  \"[cpp]\": {\n    \"editor.defaultFormatter\": \"ms-vscode.cpptools\",\n    \"editor.formatOnSave\": true,\n    \"editor.formatOnSaveMode\": \"file\",\n    \"editor.tabSize\": 4,\n    \"editor.insertSpaces\": true\n  },\n  \"cmake.configureOnOpen\": false,\n  \"editor.inlineSuggest.enabled\": false,\n  \"workbench.startupEditor\": \"none\"\n}",
+  "extensions": "[{\"identifier\": {\"id\": \"ms-vscode.cpptools\"}, \"displayName\": \"C/C++\", \"preRelease\": false}, {\"identifier\": {\"id\": \"ms-ceintl.vscode-language-pack-zh-hans\"}, \"displayName\": \"Chinese (Simplified) Language Pack\", \"preRelease\": false}]"
+}

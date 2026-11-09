@@ -5,20 +5,142 @@
       "label": "Linux：编译并运行 C 示例",
       "type": "process",
       "command": "${workspaceFolder}/linux",
-      "args": ["demo"],
-      "options": {"cwd": "${workspaceFolder}"},
-      "group": {"kind": "build", "isDefault": true},
-      "problemMatcher": ["$gcc"],
-      "presentation": {"reveal": "always", "panel": "dedicated"}
+      "args": [
+        "demo"
+      ],
+      "options": {
+        "cwd": "${workspaceFolder}"
+      },
+      "group": {
+        "kind": "build",
+        "isDefault": false
+      },
+      "problemMatcher": [
+        "$gcc"
+      ],
+      "presentation": {
+        "reveal": "always",
+        "panel": "dedicated"
+      }
     },
     {
       "label": "Linux：检查开发环境",
       "type": "process",
       "command": "${workspaceFolder}/linux",
-      "args": ["check"],
-      "options": {"cwd": "${workspaceFolder}"},
+      "args": [
+        "check"
+      ],
+      "options": {
+        "cwd": "${workspaceFolder}"
+      },
       "problemMatcher": [],
-      "presentation": {"reveal": "always"}
+      "presentation": {
+        "reveal": "always"
+      }
+    },
+    {
+      "label": "光线项目：编译检查",
+      "type": "process",
+      "command": "/opt/homebrew/bin/limactl",
+      "args": [
+        "shell",
+        "--workdir",
+        "${workspaceFolder}",
+        "embedded-dev",
+        "bash",
+        "${workspaceFolder}/scripts/build-light-monitor.sh"
+      ],
+      "options": {
+        "cwd": "${workspaceFolder}"
+      },
+      "problemMatcher": [
+        "$gcc"
+      ],
+      "presentation": {
+        "reveal": "always",
+        "panel": "dedicated"
+      }
+    },
+    {
+      "label": "光线项目：部署并采集20次",
+      "type": "process",
+      "command": "${workspaceFolder}/scripts/run-light-monitor.sh",
+      "args": [
+        "20"
+      ],
+      "options": {
+        "cwd": "${workspaceFolder}"
+      },
+      "problemMatcher": [
+        "$gcc"
+      ],
+      "presentation": {
+        "reveal": "always",
+        "panel": "dedicated"
+      }
+    },
+    {
+      "label": "IMX6ULL：准备代码补全头文件",
+      "type": "process",
+      "command": "${workspaceFolder}/scripts/vscode-imx6ull.sh",
+      "args": [
+        "prepare"
+      ],
+      "options": {
+        "cwd": "${workspaceFolder}"
+      },
+      "problemMatcher": [
+        "$gcc"
+      ],
+      "presentation": {
+        "reveal": "always",
+        "panel": "dedicated",
+        "clear": true
+      }
+    },
+    {
+      "label": "IMX6ULL：编译当前 C 文件",
+      "type": "process",
+      "command": "${workspaceFolder}/scripts/vscode-imx6ull.sh",
+      "args": [
+        "build",
+        "${file}"
+      ],
+      "options": {
+        "cwd": "${workspaceFolder}"
+      },
+      "problemMatcher": [
+        "$gcc"
+      ],
+      "presentation": {
+        "reveal": "always",
+        "panel": "dedicated",
+        "clear": true
+      },
+      "group": {
+        "kind": "build",
+        "isDefault": true
+      }
+    },
+    {
+      "label": "IMX6ULL：编译并在板子运行当前 C 文件",
+      "type": "process",
+      "command": "${workspaceFolder}/scripts/vscode-imx6ull.sh",
+      "args": [
+        "run",
+        "${file}"
+      ],
+      "options": {
+        "cwd": "${workspaceFolder}"
+      },
+      "problemMatcher": [
+        "$gcc"
+      ],
+      "presentation": {
+        "reveal": "always",
+        "panel": "dedicated",
+        "clear": true
+      }
     }
   ]
 }
