@@ -18,6 +18,8 @@
 
 #include "light_state.h"
 
+#include "led.h"
+
 #define SENSOR_ADDRESS 0x1e
 #define REG_MODE 0x00
 #define REG_ALS_LOW 0x0c
@@ -233,6 +235,15 @@ int main(int argc, char **argv)
         uint16_t raw = (uint16_t)(((uint16_t)high << 8) | low);
 
         state = light_classify(raw, threshold, bright_threshold, hysteresis, state, sample == 0);
+
+        // 根据光线的明暗去控制灯灭灯亮
+        if (state == LIGHT_DARK) {
+            if (led_set_level(0) != 0)
+                goto cleanup;
+        } else {
+            if (led_set_level(1) != 0)
+                goto cleanup;
+        }
 
         struct timespec now;
         if (clock_gettime(CLOCK_MONOTONIC, &now)) {
