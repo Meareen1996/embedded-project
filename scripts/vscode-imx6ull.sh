@@ -74,9 +74,20 @@ case "$ACTION" in
         rm -f "$OUTPUT"
         TEMP_OUTPUT="$OUTPUT.tmp.$$"
         trap 'rm -f "$TEMP_OUTPUT"' EXIT
+        EXTRA_ARGS=()
+        case "$RELATIVE" in
+            apps/mqtt-demo/*.c)
+                MQTT_SDK="$ROOT/build/mqtt-sdk"
+                if [ ! -f "$MQTT_SDK/include/mosquitto.h" ] || [ ! -f "$MQTT_SDK/lib/libmosquitto.a" ]; then
+                    echo "请先执行：$ROOT/scripts/prepare-mqtt.sh" >&2
+                    exit 1
+                fi
+                EXTRA_ARGS=("-I$MQTT_SDK/include" "$MQTT_SDK/lib/libmosquitto.a" -pthread)
+                ;;
+        esac
         arm-linux-gnueabihf-gcc -std=c11 -Wall -Wextra -g -O0 -static \
             -mcpu=cortex-a7 -mfpu=neon-vfpv4 -mfloat-abi=hard \
-            "$SOURCE" -o "$TEMP_OUTPUT"
+            "$SOURCE" "${EXTRA_ARGS[@]}" -o "$TEMP_OUTPUT"
         mv "$TEMP_OUTPUT" "$OUTPUT"
         file "$OUTPUT"
         echo "编译成功：$OUTPUT"

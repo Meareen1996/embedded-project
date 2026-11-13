@@ -14,7 +14,7 @@
       "intelliSenseMode": "linux-clang-arm",
       "cStandard": "c11",
       "cppStandard": "c++17",
-      "includePath": ["${workspaceFolder}/apps", "${workspaceFolder}/examples"],
+      "includePath": ["${workspaceFolder}/apps", "${workspaceFolder}/examples", "${workspaceFolder}/build/mqtt-sdk/include"],
       "defines": [],
       "browse": {
         "path": ["${workspaceFolder}/apps", "${workspaceFolder}/examples"],

@@ -141,6 +141,85 @@
         "panel": "dedicated",
         "clear": true
       }
+    },
+    {
+      "label": "传感器：全部编译检查",
+      "type": "process",
+      "command": "${workspaceFolder}/scripts/sensor-demos.sh",
+      "args": [
+        "build"
+      ],
+      "options": {
+        "cwd": "${workspaceFolder}"
+      },
+      "problemMatcher": [
+        "$gcc"
+      ],
+      "presentation": {
+        "reveal": "always",
+        "panel": "dedicated",
+        "clear": true
+      }
+    },
+    {
+      "label": "传感器：选择一个实验并上板运行",
+      "type": "process",
+      "command": "${workspaceFolder}/scripts/sensor-demos.sh",
+      "args": [
+        "run",
+        "${input:sensorDemo}"
+      ],
+      "options": {
+        "cwd": "${workspaceFolder}"
+      },
+      "problemMatcher": [
+        "$gcc"
+      ],
+      "presentation": {
+        "reveal": "always",
+        "panel": "dedicated",
+        "clear": true
+      }
+    },
+    {
+      "label": "传感器：所有采集通道各读5次",
+      "type": "process",
+      "command": "${workspaceFolder}/scripts/sensor-demos.sh",
+      "args": [
+        "run",
+        "all"
+      ],
+      "options": {
+        "cwd": "${workspaceFolder}"
+      },
+      "problemMatcher": [
+        "$gcc"
+      ],
+      "presentation": {
+        "reveal": "always",
+        "panel": "dedicated",
+        "clear": true
+      }
+    }
+  ],
+  "inputs": [
+    {
+      "id": "sensorDemo",
+      "type": "pickString",
+      "description": "选择传感器实验（默认5次；按键/触摸为5秒观察）",
+      "options": [
+        "als",
+        "proximity",
+        "ir",
+        "accel",
+        "gyro",
+        "imu-temp",
+        "adc",
+        "temperature",
+        "keys",
+        "touch"
+      ],
+      "default": "als"
     }
   ]
 }
